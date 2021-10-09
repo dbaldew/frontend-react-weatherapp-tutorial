@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import './SearchBar.css';
 
 //4.user voert hier zoekterm in. Query opvangen met onChange = setQuery. Value wordt nieuwe state waarde van Query.
@@ -8,7 +8,7 @@ function SearchBar({setLocationHandler}) {
 
     const [query, setQuery] = useState("")
 
-    function onFormSubmit (e){
+    function onFormSubmit(e) {
         e.preventDefault()
         setLocationHandler(query);
     }
@@ -20,7 +20,7 @@ function SearchBar({setLocationHandler}) {
                 type="text"
                 name="search"
                 placeholder="Zoek een stad in Nederland"
-                value = {query}
+                value={query}
                 onChange={(e) => setQuery(e.target.value)}
             />
 
