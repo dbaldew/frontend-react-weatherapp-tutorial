@@ -9,6 +9,8 @@ function ForecastTab({coord}) {
     //state forecast
     const [foreCasts, setForeCasts] = useState([])
 
+
+
     //useEffect
     useEffect(() => {
 
@@ -28,14 +30,19 @@ function ForecastTab({coord}) {
 
     }, [coord]);
 
+    function createDateString (timeStamp){
+        const day = new Date(timeStamp*1000);
+        return day.toLocaleDateString('nl-NL',{weekday: 'long'});
+    }
+
 
     return (
         <div className="tab-wrapper">
             {foreCasts.map((day)=>{
                 return (
-                    <article className="forecast-day">
+                    <article className="forecast-day" key={day.dt}>
                         <p className="day-description">
-                            {day.dt}
+                            {createDateString(day.dt)}
                         </p>
                         <section className="forecast-weather">
                         <span>
