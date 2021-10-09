@@ -1,85 +1,55 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './ForecastTab.css';
+import axios from "axios";
 
-function ForecastTab() {
-  return (
-    <div className="tab-wrapper">
-      <article className="forecast-day">
-        <p className="day-description">
-          Maandag
-        </p>
+const apiKey = '804a0b01271f5b289d5aebb3e9beb763';
 
-        <section className="forecast-weather">
-            <span>
-              12&deg; C
-            </span>
-          <span className="weather-description">
-              Licht Bewolkt
-            </span>
-        </section>
-      </article>
+function ForecastTab({coord}) {
 
-      <article className="forecast-day">
-        <p className="day-description">
-          Maandag
-        </p>
+    //state forecast
+    const [foreCasts, setForeCasts] = useState([])
 
-        <section className="forecast-weather">
-            <span>
-              12&deg; C
-            </span>
-          <span className="weather-description">
-              Licht Bewolkt
-            </span>
-        </section>
-      </article>
+    //useEffect
+    useEffect(() => {
 
-      <article className="forecast-day">
-        <p className="day-description">
-          Maandag
-        </p>
+        async function fetchData() {
+            try {
+                const result = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,current,hourly&appid=${apiKey}&lang=nl`);
+                console.log(result.data);
+                setForeCasts(result.data.daily.slice(1, 6));
+            } catch (e) {
+                console.error(e);
+            }
+        }
 
-        <section className="forecast-weather">
-            <span>
-              12&deg; C
-            </span>
-          <span className="weather-description">
-              Licht Bewolkt
-            </span>
-        </section>
-      </article>
+        if (coord) {
+            fetchData();
+        }
 
-      <article className="forecast-day">
-        <p className="day-description">
-          Maandag
-        </p>
+    }, [coord]);
 
-        <section className="forecast-weather">
-            <span>
-              12&deg; C
-            </span>
-          <span className="weather-description">
-              Licht Bewolkt
-            </span>
-        </section>
-      </article>
 
-      <article className="forecast-day">
-        <p className="day-description">
-          Maandag
-        </p>
-
-        <section className="forecast-weather">
-            <span>
-              12&deg; C
-            </span>
-          <span className="weather-description">
-              Licht Bewolkt
-            </span>
-        </section>
-      </article>
-    </div>
-  );
+    return (
+        <div className="tab-wrapper">
+            {foreCasts.map((day)=>{
+                return (
+                    <article className="forecast-day">
+                        <p className="day-description">
+                            {day.dt}
+                        </p>
+                        <section className="forecast-weather">
+                        <span>
+                          {day.temp.day}
+                        </span>
+                        <span className="weather-description">
+                          {day.weather[0].description}
+                        </span>
+                        </section>
+                    </article>
+                )
+            })}
+        </div>
+    );
 };
 
 export default ForecastTab;
