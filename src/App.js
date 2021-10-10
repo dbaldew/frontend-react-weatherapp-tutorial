@@ -7,9 +7,8 @@ import TabBarMenu from './components/tabBarMenu/TabBarMenu';
 import TodayTab from "./pages/todayTab/TodayTab";
 import ForecastTab from "./pages/forecastTab/ForecastTab";
 import MetricSlider from './components/metricSlider/MetricSlider';
-import KelvinToCelcius from "./Helpers/KelvinToCelcius";
+import KelvinToCelcius from "./Helpers/kelvinToCelcius";
 
-const apiKey = '804a0b01271f5b289d5aebb3e9beb763';
 
 function App() {
 
@@ -27,7 +26,7 @@ function App() {
             toggleError(false);
 
             try {
-                const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location},nl&appid=${apiKey}&lang=nl`);
+                const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location},nl&appid=${process.env.REACT_APP_API_KEY}&lang=nl`);
                 console.log(result.data);
                 setWeatherData(result.data);
             } catch (e) {
@@ -41,7 +40,6 @@ function App() {
         }
 
     }, [location]);
-
 
     return (
         <>
@@ -88,7 +86,6 @@ function App() {
                         </div>
                     </div>
                 </Router>
-
 
                 <MetricSlider/>
             </div>

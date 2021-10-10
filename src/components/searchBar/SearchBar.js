@@ -4,6 +4,7 @@ import './SearchBar.css';
 //4.user voert hier zoekterm in. Query opvangen met onChange = setQuery. Value wordt nieuwe state waarde van Query.
 //5.Callback prop vanuit App.js: setLocation koppelen aan query.
 
+
 function SearchBar({setLocationHandler}) {
 
     const [query, setQuery] = useState("")

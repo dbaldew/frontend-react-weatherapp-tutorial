@@ -1,6 +1,7 @@
 import React from 'react';
 import './MetricSlider.css';
 
+
 function MetricSlider() {
   return (
     <div className="weather-container-extention">

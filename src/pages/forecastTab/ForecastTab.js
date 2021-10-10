@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './ForecastTab.css';
 import axios from "axios";
-import kelvinToCelcius from "../../Helpers/KelvinToCelcius";
-import createDateString from "../../Helpers/CreateDateString";
+import kelvinToCelcius from "../../Helpers/kelvinToCelcius";
+import createDateString from "../../Helpers/createDateString";
 
-const apiKey = '804a0b01271f5b289d5aebb3e9beb763';
 
 function ForecastTab({coord}) {
 
@@ -15,7 +14,6 @@ function ForecastTab({coord}) {
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false)
 
-
     //useEffect
     useEffect(() => {
 
@@ -24,7 +22,7 @@ function ForecastTab({coord}) {
             toggleLoading(true);
 
             try {
-                const result = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,current,hourly&appid=${apiKey}&lang=nl`);
+                const result = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,current,hourly&appid=${process.env.REACT_APP_API_KEY}&lang=nl`);
                 console.log(result.data);
                 setForeCasts(result.data.daily.slice(1, 6));
             } catch (e) {
@@ -38,8 +36,6 @@ function ForecastTab({coord}) {
         }
 
     }, [coord]);
-
-
 
     return (
         <div className="tab-wrapper">
