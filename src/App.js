@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import axios from 'axios';
+import './App.css';
 import SearchBar from './components/searchBar/SearchBar';
 import TabBarMenu from './components/tabBarMenu/TabBarMenu';
-import MetricSlider from './components/metricSlider/MetricSlider';
-import ForecastTab from "./pages/forecastTab/ForecastTab";
-import './App.css';
 import TodayTab from "./pages/todayTab/TodayTab";
+import ForecastTab from "./pages/forecastTab/ForecastTab";
+import MetricSlider from './components/metricSlider/MetricSlider';
+import KelvinToCelcius from "./Helpers/KelvinToCelcius";
 
 const apiKey = '804a0b01271f5b289d5aebb3e9beb763';
 
 function App() {
 
-//state weatherData:  dataobject uit fetch
-//state location: Doorgeven aan <SearchBar /> als callback prop setLocationHandler.
+//state weatherData: dataobject uit fetch
+//state location: doorgeven aan <SearchBar /> als callback prop setLocationHandler.
 //state voor error
     const [weatherData, setWeatherData] = useState({});
     const [location, setLocation] = useState("");
@@ -28,7 +29,7 @@ function App() {
             try {
                 const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location},nl&appid=${apiKey}&lang=nl`);
                 console.log(result.data);
-                setWeatherData(result.data)
+                setWeatherData(result.data);
             } catch (e) {
                 console.error(e);
                 toggleError(true);
@@ -59,7 +60,7 @@ function App() {
                         <>
                             <h2>{weatherData.weather[0].description}</h2>
                             <h3>{weatherData.name}</h3>
-                            <h1>{weatherData.main.temp}</h1>
+                            <h1>{KelvinToCelcius(weatherData.main.temp)}</h1>
                         </>
                         }
                         {/*<button type="button"*/}
@@ -75,16 +76,16 @@ function App() {
                     <div className="weather-content">
                         <TabBarMenu/>
 
-                        <Switch>
-                            <div className="tab-wrapper">
-                                <Route path="/komende-week">
-                                    <ForecastTab coordinates={weatherData.coord}/>
-                                </Route>
+                        <div className="tab-wrapper">
+                            <Switch>
                                 <Route path="/" exact>
-                                    <TodayTab/>
+                                    <TodayTab coord={weatherData.coord}/>
                                 </Route>
-                            </div>
-                        </Switch>
+                                <Route path="/komende-week">
+                                    <ForecastTab coord={weatherData.coord}/>
+                                </Route>
+                            </Switch>
+                        </div>
                     </div>
                 </Router>
 
