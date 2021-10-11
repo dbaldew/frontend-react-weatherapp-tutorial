@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import TempContextProvider from "./Context/TempProvider";
+import TempContextProvider from "./Context/TempContextProvider";
 
 ReactDOM.render(
   <React.StrictMode>

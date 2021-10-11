@@ -60,6 +60,6 @@ function TodayTab({coord}) {
             </div>
         </div>
     );
-};
+}
 
 export default TodayTab;

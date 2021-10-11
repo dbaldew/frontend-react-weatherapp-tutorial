@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import './ForecastTab.css';
 import axios from "axios";
-import kelvinToCelcius from "../../Helpers/kelvinToCelcius";
 import createDateString from "../../Helpers/createDateString";
+import {TempContext} from "../../Context/TempContextProvider";
 
 
 function ForecastTab({coord}) {
@@ -13,6 +13,8 @@ function ForecastTab({coord}) {
     const [foreCasts, setForeCasts] = useState([]);
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false)
+
+    const {kelvinToMetric} = useContext(TempContext)
 
     //useEffect
     useEffect(() => {
@@ -39,17 +41,14 @@ function ForecastTab({coord}) {
 
     return (
         <div className="tab-wrapper">
-            {error && <span>Er is iets misgegaan met het ophalen van de gegevens</span>}
-            {loading && <span>Gegevens worden opgehaald...</span>}
-            {!error && foreCasts.length === 0 && <span className="no-forecast">voer een zoekopdracht in</span>}
-            {foreCasts.map((day) => {
+            {foreCasts && foreCasts.map((day) => {
                 return (
                     <article className="forecast-day" key={day.dt}>
                         <p className="day-description">{createDateString(day.dt)}
                         </p>
                         <section className="forecast-weather">
                         <span>
-                          {kelvinToCelcius(day.temp.day)}
+                          {kelvinToMetric(day.temp.day)}
                         </span>
                             <span className="weather-description">
                          {day.weather[0].description}
@@ -58,6 +57,10 @@ function ForecastTab({coord}) {
                     </article>
                 )
             })}
+
+            {error && <span>Er is iets misgegaan met het ophalen van de gegevens</span>}
+            {loading && <span>Gegevens worden opgehaald...</span>}
+            {!error && foreCasts.length === 0 && <span className="no-forecast">voer een zoekopdracht in</span>}
         </div>
     );
 };

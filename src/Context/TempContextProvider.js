@@ -4,6 +4,7 @@ import kelvinToCelcius from "../Helpers/kelvinToCelcius";
 
 export const TempContext = createContext(null);
 
+
 function TempContextProvider ({children}){
     //state
     const [selectedMetric, toggleSelectedMetric] = useState('celsius');
