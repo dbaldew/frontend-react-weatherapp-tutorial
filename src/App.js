@@ -7,7 +7,8 @@ import TabBarMenu from './components/tabBarMenu/TabBarMenu';
 import TodayTab from "./pages/todayTab/TodayTab";
 import ForecastTab from "./pages/forecastTab/ForecastTab";
 import MetricSlider from './components/metricSlider/MetricSlider';
-import KelvinToCelcius from "./Helpers/kelvinToCelcius";
+import kelvinToCelcius from "./Helpers/kelvinToCelcius";
+import kelvinToFahrenheit from "./Helpers/kelvinToFahrenheit";
 
 
 function App() {
@@ -58,7 +59,7 @@ function App() {
                         <>
                             <h2>{weatherData.weather[0].description}</h2>
                             <h3>{weatherData.name}</h3>
-                            <h1>{KelvinToCelcius(weatherData.main.temp)}</h1>
+                            <h1>{kelvinToCelcius(weatherData.main.temp)}</h1>
                         </>
                         }
                         {/*<button type="button"*/}
