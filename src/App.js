@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import axios from 'axios';
 import './App.css';
@@ -7,7 +7,8 @@ import TabBarMenu from './components/tabBarMenu/TabBarMenu';
 import TodayTab from "./pages/todayTab/TodayTab";
 import ForecastTab from "./pages/forecastTab/ForecastTab";
 import MetricSlider from './components/metricSlider/MetricSlider';
-import {TempContext} from "./Context/TempContextProvider";
+import kelvinToCelcius from "./Helpers/kelvinToCelcius";
+
 
 
 function App() {
@@ -17,9 +18,7 @@ function App() {
 //state voor error
     const [weatherData, setWeatherData] = useState({});
     const [location, setLocation] = useState("");
-    const [error, toggleError] = useState(false);
-
-    const {kelvinToMetric} = useContext(TempContext);
+    const [error, toggleError] = useState(false)
 
     useEffect(() => {
 
@@ -60,7 +59,7 @@ function App() {
                         <>
                             <h2>{weatherData.weather[0].description}</h2>
                             <h3>{weatherData.name}</h3>
-                            <h1>{kelvinToMetric(weatherData.main.temp)}</h1>
+                            <h1>{kelvinToCelcius(weatherData.main.temp)}</h1>
                         </>
                         }
                         {/*<button type="button"*/}
