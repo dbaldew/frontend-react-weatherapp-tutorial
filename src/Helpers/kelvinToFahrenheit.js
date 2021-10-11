@@ -1,7 +1,7 @@
-//T(°F) = T(K) × 9/5 - 459.67
+//T(°F) = (K - 273.15)*1.8 + 32
 
 function kelvinToFahrenheit(kelvin) {
-    return `${Math.round(kelvin * 9.5 - 459.67)}°F`;
+    return `${Math.round(kelvin-273.15)*1.8+32}°F`;
 }
 
 export default kelvinToFahrenheit;
